@@ -47,7 +47,6 @@ public class MediaServiceTest {
         try(var inputStream = Files.newInputStream(path)) {
             MultipartFile file = new MockMultipartFile("boondocks uncle ruckus", inputStream);
             request.setMediaFile(file);
-            request.setResourceType("video");
             UploadMediaResponse response = mediaService.upload(request);
 
             assertThat(response).isNotNull();

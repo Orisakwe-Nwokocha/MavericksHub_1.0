@@ -22,10 +22,7 @@ public class CloudConfig {
         Map<?, ?> map = ObjectUtils.asMap(
                 "cloud_name", cloudName,
                 "api_key", cloudApiKey,
-                "api_secret", cloudApiSecret,
-                "overwrite", true,
-                "use_filename", true,
-                "unique_filename", false
+                "api_secret", cloudApiSecret
         );
 
         return new Cloudinary(map);
