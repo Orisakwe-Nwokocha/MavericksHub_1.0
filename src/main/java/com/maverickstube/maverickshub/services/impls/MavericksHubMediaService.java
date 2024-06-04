@@ -9,7 +9,7 @@ import com.maverickstube.maverickshub.dto.responses.UploadMediaResponse;
 import com.maverickstube.maverickshub.exceptions.MediaUploadFailedException;
 import com.maverickstube.maverickshub.services.MediaService;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -17,29 +17,22 @@ import java.util.Map;
 
 @Service
 @AllArgsConstructor
-@Slf4j
 public class MavericksHubMediaService implements MediaService {
     private final MediaRepository mediaRepository;
     private final Cloudinary cloudinary;
+    private final ModelMapper modelMapper;
 
     @Override
     public UploadMediaResponse upload(UploadMediaRequest request) {
         try {
             Map<?, ?> response = cloudinary.uploader()
                     .upload(request.getMediaFile().getBytes(), ObjectUtils.emptyMap());
-            log.info("Cloudinary upload response:: {}", response);
             String url = response.get("url").toString();
-
-            Media media = new Media();
+            Media media = modelMapper.map(request, Media.class);
             media.setUrl(url);
-            media.setDescription(request.getDescription());
             Media savedMedia = mediaRepository.save(media);
 
-            UploadMediaResponse uploadMediaResponse = new UploadMediaResponse();
-            uploadMediaResponse.setMediaUrl(url);
-            uploadMediaResponse.setMediaId(savedMedia.getId());
-            uploadMediaResponse.setDescription(savedMedia.getDescription());
-            return uploadMediaResponse;
+            return modelMapper.map(savedMedia, UploadMediaResponse.class);
         } catch (IOException e) {
             throw new MediaUploadFailedException("Media upload failed");
         }

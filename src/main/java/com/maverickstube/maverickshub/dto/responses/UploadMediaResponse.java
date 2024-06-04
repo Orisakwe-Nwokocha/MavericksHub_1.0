@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UploadMediaResponse {
-    private Long mediaId;
-    private String mediaUrl;
+    private Long id;
+    private String url;
     private String description;
 }
