@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,10 +22,8 @@ public class User {
     @Column(unique = true)
     private String email;
     private String password;
-    @CreationTimestamp
     @Setter(AccessLevel.NONE)
     private LocalDateTime createdAt;
-    @UpdateTimestamp
     @Setter(AccessLevel.NONE)
     private LocalDateTime updatedAt;
     @OneToMany

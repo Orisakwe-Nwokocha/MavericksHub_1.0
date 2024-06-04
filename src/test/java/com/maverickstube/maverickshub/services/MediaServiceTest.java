@@ -83,6 +83,7 @@ public class MediaServiceTest {
         assertThat(media.getCategory()).isEqualTo(STEP_MUM);
     }
 
+
     private static UploadMediaRequest buildUploadMediaRequest(InputStream inputStream) throws IOException {
         UploadMediaRequest request = new UploadMediaRequest();
         MultipartFile file = new MockMultipartFile("media", inputStream);
@@ -91,5 +92,4 @@ public class MediaServiceTest {
         request.setCategory(COMEDY);
         return request;
     }
-
 }
