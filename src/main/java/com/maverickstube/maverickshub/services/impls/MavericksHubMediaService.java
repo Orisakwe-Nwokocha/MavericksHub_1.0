@@ -2,7 +2,6 @@ package com.maverickstube.maverickshub.services.impls;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.maverickstube.maverickshub.config.CloudConfig;
 import com.maverickstube.maverickshub.data.models.Media;
 import com.maverickstube.maverickshub.data.repositories.MediaRepository;
 import com.maverickstube.maverickshub.dto.requests.UploadMediaRequest;
@@ -27,7 +26,7 @@ public class MavericksHubMediaService implements MediaService {
     public UploadMediaResponse upload(UploadMediaRequest request) {
         try {
             Map<?, ?> response = cloudinary.uploader()
-                    .upload(request.getMediaFile().getBytes(), null);
+                    .upload(request.getMediaFile().getBytes(), ObjectUtils.emptyMap());
             log.info("Cloudinary upload response:: {}", response);
             String url = response.get("url").toString();
 
