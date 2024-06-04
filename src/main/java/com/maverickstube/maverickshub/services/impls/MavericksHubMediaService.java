@@ -61,10 +61,12 @@ public class MavericksHubMediaService implements MediaService {
 
     @Override
     public UpdateMediaResponse updateMedia(UpdateMediaRequest request) {
-        Media media = findBy(request.getMediaId());
-        media = modelMapper.map(request, Media.class);
-        Media savedMedia = mediaRepository.save(media);
+        if (!mediaRepository.existsById(request.getMediaId())) throw new MediaNotFoundException(
+                String.format("Media with id %s not found", request.getMediaId()));
 
+        Media media = modelMapper.map(request, Media.class);
+        media.setId(request.getMediaId());
+        Media savedMedia = mediaRepository.save(media);
         return modelMapper.map(savedMedia, UpdateMediaResponse.class);
     }
 }

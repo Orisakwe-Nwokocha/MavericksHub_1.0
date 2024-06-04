@@ -71,11 +71,13 @@ public class MediaServiceTest {
     public void uploadMedia() {
         Media media = mediaService.findBy(100L);
         assertThat(media.getCategory()).isEqualTo(ACTION);
+
         UpdateMediaRequest updateMediaRequest = new UpdateMediaRequest();
         updateMediaRequest.setCategory(STEP_MUM);
         updateMediaRequest.setMediaId(100L);
 
         var response = mediaService.updateMedia(updateMediaRequest);
+        log.info("response: {}", response);
         assertThat(response).isNotNull();
         media = mediaService.findBy(100L);
         assertThat(media.getCategory()).isEqualTo(STEP_MUM);
