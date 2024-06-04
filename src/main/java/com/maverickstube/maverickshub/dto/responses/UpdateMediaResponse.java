@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class UploadMediaResponse {
+public class UpdateMediaResponse {
     @JsonProperty("media_id")
     private Long id;
     @JsonProperty("media_url")
