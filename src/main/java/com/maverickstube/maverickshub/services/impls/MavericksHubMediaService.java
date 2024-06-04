@@ -23,9 +23,9 @@ public class MavericksHubMediaService implements MediaService {
     private final ModelMapper modelMapper;
 
     @Override
-    public UploadMediaResponse upload(UploadMediaRequest request, String resourceType) {
+    public UploadMediaResponse upload(UploadMediaRequest request) {
         try {
-            var map = ObjectUtils.asMap("resource_type", resourceType);
+            var map = ObjectUtils.asMap("resource_type", request.getResourceType());
             Map<?, ?> response = cloudinary.uploader()
                     .upload(request.getMediaFile().getBytes(), map);
             String url = response.get("url").toString();

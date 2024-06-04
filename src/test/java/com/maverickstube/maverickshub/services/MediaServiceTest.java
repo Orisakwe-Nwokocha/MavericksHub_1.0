@@ -28,7 +28,7 @@ public class MediaServiceTest {
         try(var inputStream = Files.newInputStream(path)) {
             MultipartFile file = new MockMultipartFile("arsenal 2023 trophy", inputStream);
             request.setMediaFile(file);
-            UploadMediaResponse response = mediaService.upload(request, "image");
+            UploadMediaResponse response = mediaService.upload(request);
 
             assertThat(response).isNotNull();
             assertThat(response.getUrl()).isNotNull();
@@ -47,7 +47,8 @@ public class MediaServiceTest {
         try(var inputStream = Files.newInputStream(path)) {
             MultipartFile file = new MockMultipartFile("boondocks uncle ruckus", inputStream);
             request.setMediaFile(file);
-            UploadMediaResponse response = mediaService.upload(request, "video");
+            request.setResourceType("video");
+            UploadMediaResponse response = mediaService.upload(request);
 
             assertThat(response).isNotNull();
             assertThat(response.getUrl()).isNotNull();

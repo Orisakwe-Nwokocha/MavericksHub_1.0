@@ -9,4 +9,5 @@ import org.springframework.web.multipart.MultipartFile;
 public class UploadMediaRequest {
     private MultipartFile mediaFile;
     private String description;
+    private String resourceType;
 }
