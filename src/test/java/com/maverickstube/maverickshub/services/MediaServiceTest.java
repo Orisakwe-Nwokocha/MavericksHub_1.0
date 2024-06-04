@@ -9,10 +9,12 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static com.maverickstube.maverickshub.utils.TestUtils.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -22,14 +24,10 @@ public class MediaServiceTest {
 
     @Test
     public void uploadMedia_uploadPictureTest() {
-        String fileLocation = "C:\\Users\\DELL\\IdeaProjects\\maverickshub\\src\\main\\resources\\static\\arsenal.avif";
-        UploadMediaRequest request = new UploadMediaRequest();
-        Path path = Paths.get(fileLocation);
+        Path path = Paths.get(TEST_IMAGE_LOCATION);
         try(var inputStream = Files.newInputStream(path)) {
-            MultipartFile file = new MockMultipartFile("arsenal 2023 trophy", inputStream);
-            request.setMediaFile(file);
+            UploadMediaRequest request = buildUploadMediaRequest(inputStream);
             UploadMediaResponse response = mediaService.upload(request);
-
             assertThat(response).isNotNull();
             assertThat(response.getUrl()).isNotNull();
         } catch (IOException exception) {
@@ -39,21 +37,22 @@ public class MediaServiceTest {
 
     @Test
     public void uploadMedia_uploadVideoTest() {
-        String fileLocation =
-                "C:\\Users\\DELL\\IdeaProjects\\maverickshub\\src\\main\\resources\\static\\Uncle Ruckus.mp4";
-        UploadMediaRequest request = new UploadMediaRequest();
-        Path path = Paths.get(fileLocation);
-
+        Path path = Paths.get(TEST_VIDEO_LOCATION);
         try(var inputStream = Files.newInputStream(path)) {
-            MultipartFile file = new MockMultipartFile("boondocks uncle ruckus", inputStream);
-            request.setMediaFile(file);
+            UploadMediaRequest request = buildUploadMediaRequest(inputStream);
             UploadMediaResponse response = mediaService.upload(request);
-
             assertThat(response).isNotNull();
             assertThat(response.getUrl()).isNotNull();
         } catch (IOException exception) {
             assertThat(exception).isNull();
         }
+    }
+
+    private static UploadMediaRequest buildUploadMediaRequest(InputStream inputStream) throws IOException {
+        UploadMediaRequest request = new UploadMediaRequest();
+        MultipartFile file = new MockMultipartFile("media", inputStream);
+        request.setMediaFile(file);
+        return request;
     }
 
 }
