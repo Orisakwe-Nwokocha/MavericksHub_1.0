@@ -16,12 +16,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -115,13 +112,4 @@ public class MediaServiceTest {
         assertThat(media.getCategory()).isEqualTo(STEP_MUM);
     }
 
-
-    private static UploadMediaRequest buildUploadMediaRequest(InputStream inputStream) throws IOException {
-        UploadMediaRequest request = new UploadMediaRequest();
-        MultipartFile file = new MockMultipartFile("media", inputStream);
-        request.setMediaFile(file);
-        request.setUserId(200L);
-        request.setCategory(COMEDY);
-        return request;
-    }
 }
