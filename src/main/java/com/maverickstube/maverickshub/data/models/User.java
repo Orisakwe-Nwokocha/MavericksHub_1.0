@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static java.time.LocalDateTime.now;
@@ -26,8 +25,6 @@ public class User {
     private LocalDateTime createdAt;
     @Setter(AccessLevel.NONE)
     private LocalDateTime updatedAt;
-    @OneToMany
-    private List<Media> media;
 
     @PrePersist
     private void setCreatedAt() {

@@ -11,6 +11,7 @@ import com.maverickstube.maverickshub.data.models.User;
 import com.maverickstube.maverickshub.data.repositories.MediaRepository;
 import com.maverickstube.maverickshub.dto.requests.UpdateMediaRequest;
 import com.maverickstube.maverickshub.dto.requests.UploadMediaRequest;
+import com.maverickstube.maverickshub.dto.responses.MediaResponse;
 import com.maverickstube.maverickshub.dto.responses.UpdateMediaResponse;
 import com.maverickstube.maverickshub.dto.responses.UploadMediaResponse;
 import com.maverickstube.maverickshub.exceptions.MediaNotFoundException;
@@ -23,6 +24,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -85,5 +87,11 @@ public class MavericksHubMediaService implements MediaService {
         } catch (JsonPatchException e) {
             throw new MediaUpdateFailedException(e.getMessage());
         }
+    }
+
+    @Override
+    public List<MediaResponse> getMediaFor(Long userId) {
+        List<Media> media = mediaRepository.findAllMediaFor(userId);
+        return List.of(modelMapper.map(media, MediaResponse[].class));
     }
 }

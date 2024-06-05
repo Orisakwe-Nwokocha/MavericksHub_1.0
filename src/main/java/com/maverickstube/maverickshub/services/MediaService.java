@@ -4,8 +4,11 @@ import com.github.fge.jsonpatch.JsonPatch;
 import com.maverickstube.maverickshub.data.models.Media;
 import com.maverickstube.maverickshub.dto.requests.UpdateMediaRequest;
 import com.maverickstube.maverickshub.dto.requests.UploadMediaRequest;
+import com.maverickstube.maverickshub.dto.responses.MediaResponse;
 import com.maverickstube.maverickshub.dto.responses.UpdateMediaResponse;
 import com.maverickstube.maverickshub.dto.responses.UploadMediaResponse;
+
+import java.util.List;
 
 public interface MediaService {
     UploadMediaResponse upload(UploadMediaRequest request);
@@ -15,4 +18,6 @@ public interface MediaService {
     UpdateMediaResponse updateMedia(Long mediaId, UpdateMediaRequest request);
 
     UpdateMediaResponse updateMedia(Long mediaId, JsonPatch jsonPatch);
+
+    List<MediaResponse> getMediaFor(Long userId);
 }

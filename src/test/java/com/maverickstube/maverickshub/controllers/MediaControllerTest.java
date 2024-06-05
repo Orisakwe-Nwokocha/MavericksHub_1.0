@@ -1,6 +1,5 @@
 package com.maverickstube.maverickshub.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -8,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.mock.web.MockPart;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 //@AllArgsConstructor
 @AutoConfigureMockMvc
+@Sql(scripts = {"/db/data.sql"})
 public class MediaControllerTest {
 //    private final MediaController mediaController;
     @Autowired
@@ -37,7 +38,7 @@ public class MediaControllerTest {
             MultipartFile multipartFile = new MockMultipartFile("mediaFile", inputStream);
             mockMvc.perform(multipart("/api/v1/media")
                             .file(multipartFile.getName(), multipartFile.getBytes())
-                            .part(new MockPart("userID", "200L".getBytes()))
+                            .part(new MockPart("userId", "200".getBytes()))
                             .part(new MockPart("description", "test description".getBytes()))
                             .part(new MockPart("category", "ACTION".getBytes()))
                     .contentType(MediaType.MULTIPART_FORM_DATA))

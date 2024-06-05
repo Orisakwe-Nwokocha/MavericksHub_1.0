@@ -9,6 +9,7 @@ import com.github.fge.jsonpatch.ReplaceOperation;
 import com.maverickstube.maverickshub.data.models.Media;
 import com.maverickstube.maverickshub.dto.requests.UpdateMediaRequest;
 import com.maverickstube.maverickshub.dto.requests.UploadMediaRequest;
+import com.maverickstube.maverickshub.dto.responses.MediaResponse;
 import com.maverickstube.maverickshub.dto.responses.UpdateMediaResponse;
 import com.maverickstube.maverickshub.dto.responses.UploadMediaResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +39,7 @@ public class MediaServiceTest {
     @Test
     public void uploadMedia_uploadPictureTest() {
         Path path = Paths.get(TEST_IMAGE_LOCATION);
-        try(var inputStream = Files.newInputStream(path)) {
+        try (var inputStream = Files.newInputStream(path)) {
             UploadMediaRequest request = buildUploadMediaRequest(inputStream);
             UploadMediaResponse response = mediaService.upload(request);
             assertThat(response).isNotNull();
@@ -51,7 +52,7 @@ public class MediaServiceTest {
     @Test
     public void uploadMedia_uploadVideoTest() {
         Path path = Paths.get(TEST_VIDEO_LOCATION);
-        try(var inputStream = Files.newInputStream(path)) {
+        try (var inputStream = Files.newInputStream(path)) {
             UploadMediaRequest request = buildUploadMediaRequest(inputStream);
             UploadMediaResponse response = mediaService.upload(request);
             log.info("response ==> {}", response);
@@ -112,4 +113,11 @@ public class MediaServiceTest {
         assertThat(media.getCategory()).isEqualTo(STEP_MUM);
     }
 
+    @Test
+    public void getMediaForUserTest() {
+        Long userId = 200L;
+        List<MediaResponse> media = mediaService.getMediaFor(userId);
+        System.out.println(media);
+        assertThat(media).hasSize(3);
+    }
 }
