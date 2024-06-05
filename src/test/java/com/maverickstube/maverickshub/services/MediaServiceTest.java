@@ -1,8 +1,15 @@
 package com.maverickstube.maverickshub.services;
 
+import com.fasterxml.jackson.databind.node.TextNode;
+import com.github.fge.jackson.jsonpointer.JsonPointer;
+import com.github.fge.jackson.jsonpointer.JsonPointerException;
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchOperation;
+import com.github.fge.jsonpatch.ReplaceOperation;
 import com.maverickstube.maverickshub.data.models.Media;
 import com.maverickstube.maverickshub.dto.requests.UpdateMediaRequest;
 import com.maverickstube.maverickshub.dto.requests.UploadMediaRequest;
+import com.maverickstube.maverickshub.dto.responses.UpdateMediaResponse;
 import com.maverickstube.maverickshub.dto.responses.UploadMediaResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +25,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import static com.maverickstube.maverickshub.data.constants.Category.*;
 import static com.maverickstube.maverickshub.utils.TestUtils.*;
@@ -69,17 +77,41 @@ public class MediaServiceTest {
     @Test
     @DisplayName("given action category, when updated, then category is step_mum")
     public void uploadMediaTest() {
-        Media media = mediaService.findMediaBy(100L);
+        Long id = 100L;
+        Media media = mediaService.findMediaBy(id);
         assertThat(media.getCategory()).isEqualTo(ACTION);
 
         UpdateMediaRequest updateMediaRequest = new UpdateMediaRequest();
         updateMediaRequest.setCategory(STEP_MUM);
-        Long id = 100L;
-
         var response = mediaService.updateMedia(id, updateMediaRequest);
-        log.info("response: {}", response);
+
+        log(response);
         assertThat(response).isNotNull();
-        media = mediaService.findMediaBy(100L);
+        media = mediaService.findMediaBy(id);
+        assertThat(media.getCategory()).isEqualTo(STEP_MUM);
+    }
+
+    private static void log(UpdateMediaResponse response) {
+        log.info("response: {}", response);
+    }
+
+    @Test
+    @DisplayName("given action category, when updated, then category is step_mum")
+    public void uploadMediaUsingJsonPatchTest() throws JsonPointerException {
+        Long id = 100L;
+        Media media = mediaService.findMediaBy(id);
+        assertThat(media.getCategory()).isEqualTo(ACTION);
+
+        List<JsonPatchOperation> operations = List.of(
+                new ReplaceOperation(new JsonPointer("/category"),
+                        new TextNode(STEP_MUM.name()))
+        );
+        JsonPatch jsonPatch = new JsonPatch(operations);
+        var response = mediaService.updateMedia(id, jsonPatch);
+
+        log(response);
+        assertThat(response).isNotNull();
+        media = mediaService.findMediaBy(id);
         assertThat(media.getCategory()).isEqualTo(STEP_MUM);
     }
 

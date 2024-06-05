@@ -1,5 +1,9 @@
 package com.maverickstube.maverickshub.data.models;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.maverickstube.maverickshub.data.constants.Category;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -26,14 +30,22 @@ public class Media {
     private Long id;
     private String url;
     private String description;
+
     @Enumerated(STRING)
     private Category category;
+
     @CreationTimestamp
     @Setter(AccessLevel.NONE)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime createdAt;
+
     @UpdateTimestamp
     @Setter(AccessLevel.NONE)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime updatedAt;
+
     @ManyToOne
     private User uploader;
 
