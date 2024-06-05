@@ -37,14 +37,14 @@ public class MavericksHubUserService implements UserService {
     }
 
     @Override
-    public List<GetUserResponse> findAll() {
+    public List<GetUserResponse> findAllUsers() {
         var foundUsers = userRepository.findAll();
         if (foundUsers.isEmpty()) throw new InvalidStateException("No users found in the database");
         return List.of(MAPPER.map(foundUsers, GetUserResponse[].class));
     }
 
     @Override
-    public User findBy(Long id) {
+    public User findUserBy(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(()-> new UserNotFoundException(
                         String.format("User with id %s not found", id)

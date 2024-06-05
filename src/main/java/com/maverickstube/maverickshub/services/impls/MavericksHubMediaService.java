@@ -30,7 +30,7 @@ public class MavericksHubMediaService implements MediaService {
 
     @Override
     public UploadMediaResponse upload(UploadMediaRequest request) {
-        User user = userService.findBy(request.getUserId());
+        User user = userService.findUserBy(request.getUserId());
         try {
             var map = ObjectUtils.asMap(
                     "resource_type", "auto",
@@ -54,14 +54,14 @@ public class MavericksHubMediaService implements MediaService {
     }
 
     @Override
-    public Media findBy(Long id) {
+    public Media findMediaBy(Long id) {
         return mediaRepository.findById(id).orElseThrow(() -> new MediaNotFoundException(
                 String.format("Media with id %s not found", id)));
     }
 
     @Override
-    public UpdateMediaResponse updateMedia(UpdateMediaRequest request) {
-        Media media = findBy(request.getMediaId());
+    public UpdateMediaResponse updateMedia(Long mediaID, UpdateMediaRequest request) {
+        Media media = findMediaBy(mediaID);
         modelMapper.map(request, media);
         Media savedMedia = mediaRepository.save(media);
         return modelMapper.map(savedMedia, UpdateMediaResponse.class);

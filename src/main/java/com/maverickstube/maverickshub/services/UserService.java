@@ -13,7 +13,7 @@ public interface UserService {
 
     GetUserResponse getUserById(GetUserRequest request);
 
-    List<GetUserResponse> findAll();
+    List<GetUserResponse> findAllUsers();
 
-    User findBy(Long id);
+    User findUserBy(Long id);
 }

@@ -61,25 +61,25 @@ public class MediaServiceTest {
     @DisplayName("test that media can be retrieved by id")
     public void getMediaByIdTest() {
         Long id = 101L;
-        Media media = mediaService.findBy(id);
+        Media media = mediaService.findMediaBy(id);
         log.info("media ==> {}", media);
         assertThat(media.getId()).isNotNull();
     }
 
     @Test
     @DisplayName("given action category, when updated, then category is step_mum")
-    public void uploadMedia() {
-        Media media = mediaService.findBy(100L);
+    public void uploadMediaTest() {
+        Media media = mediaService.findMediaBy(100L);
         assertThat(media.getCategory()).isEqualTo(ACTION);
 
         UpdateMediaRequest updateMediaRequest = new UpdateMediaRequest();
         updateMediaRequest.setCategory(STEP_MUM);
-        updateMediaRequest.setMediaId(100L);
+        Long id = 100L;
 
-        var response = mediaService.updateMedia(updateMediaRequest);
+        var response = mediaService.updateMedia(id, updateMediaRequest);
         log.info("response: {}", response);
         assertThat(response).isNotNull();
-        media = mediaService.findBy(100L);
+        media = mediaService.findMediaBy(100L);
         assertThat(media.getCategory()).isEqualTo(STEP_MUM);
     }
 

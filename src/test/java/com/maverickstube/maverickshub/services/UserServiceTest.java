@@ -46,7 +46,7 @@ public class UserServiceTest {
 
     @Test
     public void findAllUsersTest() {
-        List<GetUserResponse> response = userService.findAll();
+        List<GetUserResponse> response = userService.findAllUsers();
         System.out.println(response);
         assertThat(response).isNotNull();
         assertThat( response.size()).isGreaterThanOrEqualTo(3);
@@ -56,7 +56,7 @@ public class UserServiceTest {
     @DisplayName("test that user can be retrieved by id")
     public void getUserByIdTest() {
         Long id = 200L;
-        User user = userService.findBy(id);
+        User user = userService.findUserBy(id);
         assertThat(user.getId()).isNotNull();
     }
 }

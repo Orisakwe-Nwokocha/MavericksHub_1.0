@@ -9,7 +9,7 @@ import com.maverickstube.maverickshub.dto.responses.UploadMediaResponse;
 public interface MediaService {
     UploadMediaResponse upload(UploadMediaRequest request);
 
-    Media findBy(Long id);
+    Media findMediaBy(Long id);
 
-    UpdateMediaResponse updateMedia(UpdateMediaRequest updateMediaRequest);
+    UpdateMediaResponse updateMedia(Long mediaId, UpdateMediaRequest request);
 }
