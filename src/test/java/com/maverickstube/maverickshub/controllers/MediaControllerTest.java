@@ -17,8 +17,9 @@ import java.nio.file.Paths;
 
 import static com.maverickstube.maverickshub.utils.TestUtils.TEST_IMAGE_LOCATION;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
-
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -48,8 +49,18 @@ public class MediaControllerTest {
 //            assertThat(exception).isNull();
             throw exception;
         }
+    }
 
-
+    @Test
+    public void testGetMediaForUser() {
+        try {
+            mockMvc.perform(get("/api/v1/media/200")
+                    .contentType(APPLICATION_JSON))
+                    .andExpect(status().is2xxSuccessful())
+                    .andDo(print());
+        } catch (Exception exception) {
+            assertThat(exception).isNull();
+        }
     }
 
 }

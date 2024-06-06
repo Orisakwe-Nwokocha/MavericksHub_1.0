@@ -16,7 +16,12 @@ public class MediaController {
     private final MediaService mediaService;
 
     @PostMapping(consumes = {MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<?> upload(@ModelAttribute UploadMediaRequest uploadMediaRequest) {
+    public ResponseEntity<?> uploadMedia(@ModelAttribute UploadMediaRequest uploadMediaRequest) {
         return ResponseEntity.status(CREATED).body(mediaService.upload(uploadMediaRequest));
+    }
+
+    @GetMapping("{userId}")
+    public ResponseEntity<?> getMediaForUser(@PathVariable Long userId) {
+        return ResponseEntity.ok().body(mediaService.getMediaFor(userId));
     }
 }
