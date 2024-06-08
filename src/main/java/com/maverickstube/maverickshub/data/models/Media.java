@@ -19,16 +19,18 @@ import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static java.time.LocalDateTime.now;
 
-
 @Entity
 @Getter
 @Setter
 @ToString
 public class Media {
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
+
     private String url;
+
     private String description;
 
     @Enumerated(STRING)

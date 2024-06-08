@@ -9,7 +9,9 @@ import com.maverickstube.maverickshub.dto.responses.RegisterResponse;
 import com.maverickstube.maverickshub.exceptions.InvalidStateException;
 import com.maverickstube.maverickshub.exceptions.UserNotFoundException;
 import com.maverickstube.maverickshub.services.UserService;
+
 import static com.maverickstube.maverickshub.utils.MapperSingleton.MAPPER;
+
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

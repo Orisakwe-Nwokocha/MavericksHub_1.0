@@ -22,13 +22,17 @@ public class User {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
+
     @Column(unique = true)
     private String email;
+
     private String password;
+
     @Setter(AccessLevel.NONE)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime createdAt;
+
     @Setter(AccessLevel.NONE)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
@@ -42,10 +46,6 @@ public class User {
     @PreUpdate
     private void setUpdatedAt() {
         updatedAt = now();
-    }
-
-    public static void main(String[] args) {
-        System.out.println(now());
     }
 
 }

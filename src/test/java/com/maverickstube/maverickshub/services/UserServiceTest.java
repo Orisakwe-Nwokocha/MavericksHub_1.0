@@ -30,6 +30,7 @@ public class UserServiceTest {
         request.setPassword("password");
 
         RegisterResponse response = userService.register(request);
+        System.out.println(response);
         assertNotNull(response);
         assertTrue(response.getMessage().contains("successfully"));
     }
